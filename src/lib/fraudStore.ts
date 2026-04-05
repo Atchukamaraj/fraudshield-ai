@@ -1,6 +1,3 @@
-import { create } from "zustand" is not available, so we use React context instead.
-// Using a simple global store pattern with event emitter
-
 import { Transaction, PredictionResult, ModelMetrics, computeMetrics, predictTransactions } from "./fraudEngine";
 
 interface FraudState {
@@ -44,7 +41,6 @@ export async function runPrediction() {
   state = { ...state, isProcessing: true };
   notify();
 
-  // Simulate processing delay
   await new Promise(r => setTimeout(r, 1500));
 
   const predictions = predictTransactions(state.transactions);
