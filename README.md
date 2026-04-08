@@ -1,70 +1,188 @@
-# 🛡️ ML Fraud Detection System
+# 🛡️ FraudShield AI
 
-A production-ready machine learning pipeline for detecting fraudulent transactions. This project leverages an XGBoost classifier served via a FastAPI backend, cleanly integrated with an interactive Streamlit dashboard.
+### Context-Aware Financial Fraud Detection System
 
-## 🌟 Features
-- **Machine Learning Analysis:** Built with XGBoost and StandardScaler, incorporating cost-sensitive learning to handle data imbalances.
-- **REST API Backend:** Container-ready FastAPI serving live inference endpoints with custom error handling and CORS support.
-- **Interactive UI:** A Streamlit dashboard that dynamically evaluates and color-codes transactions based on defined risk probabilities (LOW, MEDIUM, HIGH).
-- **Deployment Ready:** Fully configured to deploy seamlessly onto hosting environments like Render and Streamlit Cloud.
+FraudShield AI is an end-to-end **machine learning-based fraud detection system** designed to identify fraudulent financial transactions in real-time. The system uses advanced ML techniques like **XGBoost with cost-sensitive learning** to handle imbalanced datasets and improve detection accuracy.
 
-## 🚀 Setup Instructions
+---
 
-1. **Clone the Repository & Setup Environment**
-   ```bash
-   git clone <repository-url>
-   cd fraudshield-ai
-   python -m venv venv
-   # On macOS/Linux: source venv/bin/activate
-   # On Windows: venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
+## 🚀 Features
 
-2. **Train the Model Base**
-   ```bash
-   python model/train.py
-   ```
-   *(This generates the necessary `model.pkl` and `scaler.pkl` required for the API API.)*
+* 🔍 Real-time fraud detection
+* ⚖️ Handles imbalanced datasets using cost-sensitive learning
+* 🧠 Feature engineering and scaling
+* 📊 Risk scoring system (LOW / MEDIUM / HIGH)
+* ⚡ FastAPI backend for prediction API
+* 🎨 Streamlit frontend for user interaction
+* 🌐 Deployment-ready architecture (Render + Streamlit Cloud)
+* 🔐 CORS enabled and error handling
 
-3. **Run Locally**
-   - **Backend (API):** `uvicorn backend.main:app --reload --port 8000`
-   - **Frontend (UI):** Open a split terminal and run `streamlit run frontend/app.py`
+---
 
-## 🔌 API Reference
+## 🧱 Project Structure
 
-### `POST /predict`
-Evaluates a transaction payload and returns a risk distribution metric.
+```
+fraudshield-ai/
+│
+├── backend/
+│   └── main.py            # FastAPI backend
+│
+├── frontend/
+│   └── app.py             # Streamlit UI
+│
+├── model/
+│   ├── train.py           # Model training script
+│   ├── model.pkl          # Trained model (generated)
+│   └── scaler.pkl         # Scaler (generated)
+│
+├── requirements.txt
+└── README.md
+```
 
-**Request Payload:**
-```json
+---
+
+## 🧠 Machine Learning Workflow
+
+1. Data Collection
+2. Data Preprocessing
+3. Feature Engineering
+4. Feature Scaling
+5. Handling Imbalanced Data
+6. Cost-Sensitive Learning
+7. Model Training using XGBoost
+8. Model Evaluation
+9. Prediction & Risk Classification
+
+---
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the Repository
+
+```
+git clone https://github.com/Atchukamaraj/fraudshield-ai.git
+cd fraudshield-ai
+```
+
+---
+
+### 2. Install Dependencies
+
+```
+pip install -r requirements.txt
+```
+
+---
+
+### 3. Train the Model
+
+```
+python model/train.py
+```
+
+---
+
+### 4. Run Backend (FastAPI)
+
+```
+uvicorn backend.main:app --reload --port 8000
+```
+
+👉 Open in browser:
+http://127.0.0.1:8000/docs
+
+---
+
+### 5. Run Frontend (Streamlit)
+
+```
+streamlit run frontend/app.py
+```
+
+---
+
+## 🔌 API Endpoint
+
+### POST `/predict`
+
+### Input:
+
+```
 {
-  "amount": 120.50,
+  "amount": 5000,
   "time": 14,
   "transaction_type": 2,
-  "location": 15
+  "location": 10
 }
 ```
-**Response Output:**
-```json
+
+### Output:
+
+```
 {
-  "fraud": 0,
-  "probability": 0.12,
-  "risk_level": "LOW"
+  "fraud": 1,
+  "probability": 0.87,
+  "risk_level": "HIGH"
 }
 ```
-*(Interactive API documentation is securely hosted at `/docs` when the backend runs).*
+
+---
+
+## ⚠️ Risk Classification Logic
+
+| Probability Range | Risk Level |
+| ----------------- | ---------- |
+| < 0.3             | LOW        |
+| 0.3 – 0.7         | MEDIUM     |
+| > 0.7             | HIGH       |
+
+---
+
+## 📊 Evaluation Metrics
+
+* Accuracy
+* Precision
+* Recall (important for fraud detection)
+* F1 Score
+* ROC-AUC
+
+---
 
 ## 🌍 Deployment
 
-### 1. Deploying the Backend (Render)
-- Deploy your repository as a new **Web Service**.
-- **Build Command:** `pip install -r requirements.txt`
-- **Start Command:** `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
-- *Keep the generated `.onrender.com` URL handy.*
+### Backend (Render)
 
-### 2. Deploying the Frontend (Streamlit Cloud)
-- Go to Streamlit Community Cloud, host your project and target `frontend/app.py` as the Main File Path.
-- Map the backend API securely by heading to **Advanced Settings -> Secrets** and defining your Render link:
-  ```toml
-  BACKEND_URL="https://your-backend-app-name.onrender.com"
-  ```
+```
+uvicorn backend.main:app --host 0.0.0.0 --port 10000
+```
+
+---
+
+### Frontend (Streamlit Cloud)
+
+Set environment variable:
+
+```
+BACKEND_URL=https://your-backend-url.onrender.com
+```
+
+---
+
+## 🔥 Future Improvements
+
+* Explainable AI using SHAP
+* Real-time streaming data
+* Advanced analytics dashboard
+* Multi-model ensemble approach
+
+---
+
+## 👨💻 Author
+
+**Atchukamaraj**
+
+---
+
+## ⭐ Support
+
+If you found this project useful, please give it a ⭐ on GitHub!
